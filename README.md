@@ -2,6 +2,7 @@
 A GO-powered "Event Booking" REST API
 
 ### Supported Routes
+```code
 - GET /events                   -> get a list of available events
 - GET /events/<id>              -> get a single event
 - POST /events                  -> create a bookable event          *Auth Required 
@@ -11,3 +12,4 @@ A GO-powered "Event Booking" REST API
 - POST /login                   -> authenticate user                *Auth Token (JWT) 
 - POST /events/<id>/register    -> register user for event          *Auth Required
 - DELETE /events/<id>/register  -> cancel registration              *Auth Required
+```
