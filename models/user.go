@@ -1,6 +1,9 @@
 package models
 
-import "example.com/event_booking_api/db"
+import (
+	"example.com/event_booking_api/db"
+	"example.com/event_booking_api/utils"
+)
 
 type User struct {
 	ID       int64
@@ -17,8 +20,14 @@ func (u User) Save() error {
 	}
 
 	defer stmt.Close()
+	//! HASH THE PASSWORD
+	hashedPassword, err := utils.HashPassword(u.Password)
 
-	result, err := stmt.Exec(u.Email, u.Password)
+	if err != nil {
+		return err
+	}
+
+	result, err := stmt.Exec(u.Email, hashedPassword)
 
 	if err != nil {
 		return err
