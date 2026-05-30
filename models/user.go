@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 
 	"example.com/event_booking_api/db"
 	"example.com/event_booking_api/utils"
@@ -14,7 +15,7 @@ type User struct {
 }
 
 func (u User) Save() error {
-	query := "INSERT INTO users(email, password) VALUES (?, ?)"
+	query := "INSERT INTO users(email, password) VALUES(?, ?)"
 	stmt, err := db.DB.Prepare(query)
 
 	if err != nil {
@@ -49,11 +50,14 @@ func (u User) ValidateCredentials() error {
 
 	err := row.Scan(&retrievedPassword)
 
+	fmt.Println(u.Password, retrievedPassword)
+
 	if err != nil {
 		return err
 	}
 
 	passwordIsValid := utils.CheckPasswordHash(u.Password, retrievedPassword)
+	fmt.Println(passwordIsValid)
 
 	if !passwordIsValid {
 		return errors.New("Credentials invalid")
