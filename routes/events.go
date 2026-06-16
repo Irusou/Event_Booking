@@ -44,7 +44,7 @@ func createEvent(c *gin.Context) {
 	}
 
 	// validate token
-	err := utils.ValidateJWT(token)
+	userID, err := utils.ValidateJWT(token)
 
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "not authorized"})
@@ -58,8 +58,8 @@ func createEvent(c *gin.Context) {
 		return
 	}
 
-	event.ID = 1
-	event.UserID = 10
+	event.UserID = userID
+
 	err = event.Save()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "could not create events."})
